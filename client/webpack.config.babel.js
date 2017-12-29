@@ -1,16 +1,25 @@
 import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
   entry: "./main.ts",
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, 'dist'),
     filename: "main.js"
   },
+  devtool: 'source-map',
   module: {
-    loaders: [
-        { test: /.ts$/, loader: "ts-loader" }
+    rules: [
+      { test: /.ts$/, use: "ts-loader" },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'sass-loader']
+        })
+      }
     ]
   },
   resolve: {
@@ -20,10 +29,12 @@ export default {
     new HtmlWebpackPlugin({
       template: 'index.html'
     }),
+    // fix warnings
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)(@angular|esm5)/,
       path.resolve(__dirname, '../src')
-    )
+    ),
+    new ExtractTextPlugin('style.css')
   ]
 };
