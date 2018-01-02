@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { MatButtonModule, MatCardModule } from '@angular/material';
 
 import { HttpModule } from '@angular/http';
 import { ApiService } from './api.service';
@@ -10,7 +11,7 @@ import { ApiService } from './api.service';
     AppComponent
   ],
   imports: [
-    BrowserModule, HttpModule
+    BrowserModule, HttpModule, MatButtonModule, MatCardModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
