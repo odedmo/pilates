@@ -8,9 +8,11 @@ export class ApiService {
 
     constructor(private http: Http) {}
 
+    messages:any[] = [];
+
     getMessages() {
-        this.http.post(apiPath + 'test', {name: 'oded'}).subscribe(res => {
-            console.log(res);
+        this.http.get(apiPath + 'posts').subscribe(res => {
+            this.messages = res.json();
         })
     }
 }
