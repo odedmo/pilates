@@ -5,10 +5,11 @@ import { MatButtonModule, MatCardModule } from '@angular/material';
 
 import { HttpModule } from '@angular/http';
 import { ApiService } from './api.service';
+import { MessagesComponent } from './messages.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, MessagesComponent
   ],
   imports: [
     BrowserModule, HttpModule, MatButtonModule, MatCardModule
