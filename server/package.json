@@ -12,6 +12,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "*",
+    "mongoose": "^5.0.0-rc2",
     "path": "^0.12.7"
   },
   "devDependencies": {
