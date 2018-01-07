@@ -13,6 +13,10 @@ export class ApiService {
     getMessages() {
         this.http.get(apiPath + 'posts').subscribe(res => {
             this.messages = res.json();
-        })
+        });
+    }
+
+    register(registerData: any) {
+        this.http.post(apiPath + 'register', registerData).subscribe(res => {});
     }
 }

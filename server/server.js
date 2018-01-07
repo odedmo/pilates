@@ -8,8 +8,6 @@ const router = require('./router');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const User = require('./models/User');
-
 // const clientPath = '/../client/';
 // app.use(express.static(path.join(__dirname, clientPath)));
 // app.use('/scripts', express.static(path.join(__dirname, clientPath + 'node_modules')));
@@ -24,17 +22,6 @@ app.use(cors());
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, clientPath + 'index.html'));
 // });
-
-app.post('/register', (req, res) => {
-  const userData = req.body;
-  const user = new User(userData);
-  user.save((err, result) => {
-    if (err) {
-      console.log('saving user error');
-    }
-    res.sendStatus(200);
-  });
-});
 
 app.listen(port, function () {
   console.log('listening on port ' + port); 
