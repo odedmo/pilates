@@ -15,8 +15,4 @@ export class ApiService {
             this.messages = res.json();
         });
     }
-
-    register(registerData: any) {
-        this.http.post(apiPath + 'register', registerData).subscribe(res => {});
-    }
 }
