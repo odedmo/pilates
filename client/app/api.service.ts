@@ -9,10 +9,17 @@ export class ApiService {
     constructor(private http: Http) {}
 
     messages:any[] = [];
+    users:any[] = [];
 
     getMessages() {
         this.http.get(apiPath + 'posts').subscribe(res => {
             this.messages = res.json();
+        });
+    }
+
+    getUsers() {
+        this.http.get(apiPath + 'users').subscribe(res => {
+            this.users = res.json();
         });
     }
 }
