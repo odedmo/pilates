@@ -8,6 +8,8 @@ const router = require('./router');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// mongoose.Promise = Promise;
+
 // const clientPath = '/../client/';
 // app.use(express.static(path.join(__dirname, clientPath)));
 // app.use('/scripts', express.static(path.join(__dirname, clientPath + 'node_modules')));

@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('./models/User');
 const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt-nodejs');
 
 let posts = [{
         message: 'hello'
@@ -28,15 +29,15 @@ module.exports = function (app) {
         }
     });
 
-    // apiRoutes.get('/profile/:id', async(req, res, next) => {
-    //     try {
-    //         const user = await User.findById(req.params.id, '-password -__v');
-    //         return res.send(user);
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.sendStatus(500);
-    //     }
-    // });
+    apiRoutes.get('/profile/:id', async(req, res, next) => {
+        try {
+            const user = await User.findById(req.params.id, '-password -__v');
+            return res.send(user);
+        } catch (error) {
+            console.error(error);
+            res.sendStatus(500);
+        }
+    });
 
     apiRoutes.post('/register', (req, res, next) => {
         const userData = req.body;
@@ -50,19 +51,17 @@ module.exports = function (app) {
     });
 
     apiRoutes.post('/login', async(req, res, next) => {
-        const userData = req.body;
+        const loginData = req.body;
         const user = await User.findOne({
-            email: userData.email
+            email: loginData.email
         });
-        if (!user || userData.password !== user.password) {
-            return res.status(401).send({
-                message: 'invalid email or pasword'
-            });
-        }
-        let payload = {};
-        const token = jwt.encode(payload, 'my-secret');
-        res.status(200).send({
-            token
+        bcrypt.compare(loginData.password, user.password, (err, isMatch) => {
+            if (!isMatch) {
+                return res.status(401).send({message: 'invalid email or pasword'});
+            }
+            let payload = {};
+            const token = jwt.encode(payload, 'my-secret');
+            res.status(200).send({token});
         });
     });
 
