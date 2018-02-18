@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('./models/User');
+const Post = require('./models/Post');
 
 const auth = require('./auth');
 
@@ -17,6 +18,18 @@ module.exports = function (app) {
 
     apiRoutes.get('/posts', (req, res, next) => {
         return res.status(200).send(posts);
+    });
+
+    apiRoutes.post('/post', (req, res, next) => {
+        let post = new Post(req.body);
+
+        post.save((err, result) => {
+            if (err) {
+                console.error('saving post error');
+                return res.status(500).send({message: 'saving post error'});
+            }
+            res.sendStatus(200);
+        });
     });
 
     apiRoutes.get('/users', async(req, res, next) => {
