@@ -17,6 +17,10 @@ export class ApiService {
         });
     }
 
+    postMessage(message: any) {
+        this.http.post(apiPath + 'post', message).subscribe(res => {});
+    }
+
     getUsers() {
         this.http.get(apiPath + 'users').subscribe(res => {
             this.users = res.json();

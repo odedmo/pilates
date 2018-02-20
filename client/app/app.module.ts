@@ -19,8 +19,10 @@ import { UsersComponent } from './users.component';
 import { RegisterComponent } from './register.component';
 import { LoginComponent } from './login.component';
 import { ProfileComponent } from './profile.component';
+import { PostComponent } from './post.component';
 
 const routes = [
+  { path: '', component: PostComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'users', component: UsersComponent },
@@ -34,7 +36,8 @@ const routes = [
     UsersComponent, 
     RegisterComponent, 
     LoginComponent, 
-    ProfileComponent
+    ProfileComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule, 
