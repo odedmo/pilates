@@ -1,27 +1,23 @@
 const express = require('express');
 const User = require('./models/User');
 const Post = require('./models/Post');
-
 const auth = require('./auth');
-
-let posts = [{
-        message: 'hello'
-    },
-    {
-        message: 'hi'
-    }
-]
 
 module.exports = function (app) {
 
     const apiRoutes = express.Router();
 
-    apiRoutes.get('/posts', (req, res, next) => {
-        return res.status(200).send(posts);
+    apiRoutes.get('/posts/:id', async (req, res) => {
+        const author = req.params.id;
+        const posts = await Post.find({author});
+        res.send(posts);
     });
 
     apiRoutes.post('/post', (req, res, next) => {
-        let post = new Post(req.body);
+        const postData = req.body;
+        postData.author = '5a531b571cc9dd3a006a1aa6';
+
+        let post = new Post(postData);
 
         post.save((err, result) => {
             if (err) {

@@ -11,13 +11,13 @@ export class ApiService {
     messages: any[] = [];
     users: any[] = [];
 
-    getMessages() {
-        this.http.get(apiPath + 'posts').subscribe(res => {
+    getMessages(userId: String) {
+        this.http.get(apiPath + 'posts/' + userId).subscribe(res => {
             this.messages = res.json();
         });
     }
 
-    postMessage(message: any) {
+    postMessage(message: Object) {
         this.http.post(apiPath + 'post', message).subscribe(res => {});
     }
 
@@ -27,7 +27,7 @@ export class ApiService {
         });
     }
 
-    getProfile(id: any) {
+    getProfile(id: String) {
         return this.http.get(apiPath + 'profile/' + id);
     }
 }
