@@ -22,7 +22,9 @@ module.exports = {
             if (!isMatch) {
                 return res.status(401).send({message: 'invalid email or pasword'});
             }
-            let payload = {};
+            let payload = {
+                sub: user._id
+            };
             const token = jwt.encode(payload, 'my-secret');
             res.status(200).send({token});
         });

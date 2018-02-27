@@ -10,8 +10,9 @@ import {
   MatListModule 
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; 
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { MessagesComponent } from './messages.component';
@@ -41,7 +42,7 @@ const routes = [
   ],
   imports: [
     BrowserModule, 
-    HttpModule, 
+    HttpClientModule, 
     FormsModule,
     MatButtonModule, 
     MatCardModule, 

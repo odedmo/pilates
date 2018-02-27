@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 const apiPath = 'http://localhost:3000/api/';
@@ -6,14 +6,14 @@ const apiPath = 'http://localhost:3000/api/';
 @Injectable()
 export class ApiService {
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     messages: any[] = [];
     users: any[] = [];
 
     getMessages(userId: String) {
-        this.http.get(apiPath + 'posts/' + userId).subscribe(res => {
-            this.messages = res.json();
+        this.http.get<any>(apiPath + 'posts/' + userId).subscribe(res => {
+            this.messages = res;
         });
     }
 
@@ -22,8 +22,8 @@ export class ApiService {
     }
 
     getUsers() {
-        this.http.get(apiPath + 'users').subscribe(res => {
-            this.users = res.json();
+        this.http.get<any>(apiPath + 'users').subscribe(res => {
+            this.users = res;
         });
     }
 
