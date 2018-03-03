@@ -10,7 +10,7 @@ import {
   MatListModule 
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApiService } from './api.service';
@@ -21,6 +21,7 @@ import { RegisterComponent } from './register.component';
 import { LoginComponent } from './login.component';
 import { ProfileComponent } from './profile.component';
 import { PostComponent } from './post.component';
+import { AuthInterceptorService } from './authInterceptor.service';
 
 const routes = [
   { path: '', component: PostComponent },
@@ -52,7 +53,11 @@ const routes = [
     BrowserAnimationsModule,
     MatListModule
   ],
-  providers: [ApiService, AuthService],
+  providers: [ApiService, AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 

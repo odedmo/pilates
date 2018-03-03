@@ -3,6 +3,9 @@ const User = require('./models/User');
 const Post = require('./models/Post');
 const auth = require('./auth');
 
+const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jwt-simple');
+
 module.exports = function (app) {
 
     const apiRoutes = express.Router();
@@ -13,9 +16,9 @@ module.exports = function (app) {
         res.send(posts);
     });
 
-    apiRoutes.post('/post', (req, res, next) => {
+    apiRoutes.post('/post', auth.checkAuthenticated, (req, res, next) => {
         const postData = req.body;
-        postData.author = '5a531b571cc9dd3a006a1aa6';
+        postData.author = req.userId;
 
         let post = new Post(postData);
 

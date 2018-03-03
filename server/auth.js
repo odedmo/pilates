@@ -28,5 +28,21 @@ module.exports = {
             const token = jwt.encode(payload, 'my-secret');
             res.status(200).send({token});
         });
+    },
+    checkAuthenticated: (req, res, next) => {
+        if (!req.header('authorization')) {
+            return res.status(401).send({
+                message: 'Unauthorized, missing Auth Header'
+            });
+        }
+        const token = req.header('authorization').split(' ')[1];
+        const payload = jwt.decode(token, 'my-secret');
+        if (!payload) {
+            return res.status(401).send({
+                message: 'Unauthorized, Auth Header invalid'
+            });
+        }
+        req.userId = payload.sub;
+        next();
     }
 }
