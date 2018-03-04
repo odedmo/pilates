@@ -14,7 +14,7 @@ export class AuthService {
     }
 
     register(registerData: any) {
-        this.http.post(this.apiPath + 'register', registerData).subscribe(res => {});
+        this.http.post(this.apiPath + 'register', registerData, {responseType: 'text'}).subscribe(res => {});
     }
 
     login(loginData: any) {

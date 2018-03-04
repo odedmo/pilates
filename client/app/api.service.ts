@@ -18,7 +18,7 @@ export class ApiService {
     }
 
     postMessage(message: Object) {
-        this.http.post(apiPath + 'post', message).subscribe(res => {});
+        this.http.post(apiPath + 'post', message, {responseType: 'text'}).subscribe(res => {});
     }
 
     getUsers() {
