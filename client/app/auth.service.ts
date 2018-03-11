@@ -13,6 +13,14 @@ export class AuthService {
         return localStorage.getItem(this.TOKEN_KEY);
     }
 
+    get isAuthenticated() {
+        return !!localStorage.getItem(this.TOKEN_KEY);
+    }
+
+    logout() {
+        localStorage.removeItem(this.TOKEN_KEY);
+    }
+
     register(registerData: any) {
         this.http.post(this.apiPath + 'register', registerData, {responseType: 'text'}).subscribe(res => {});
     }
