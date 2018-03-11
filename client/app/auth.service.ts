@@ -22,12 +22,18 @@ export class AuthService {
     }
 
     register(registerData: any) {
-        this.http.post(this.apiPath + 'register', registerData, {responseType: 'text'}).subscribe(res => {});
+        this.http.post<any>(this.apiPath + 'register', registerData).subscribe(res => {
+            this.saveToken(res.token);
+        });
     }
 
     login(loginData: any) {
         this.http.post<any>(this.apiPath + 'login', loginData).subscribe(res => {
-            localStorage.setItem('token', res.token);
+            this.saveToken(res.token);
         });
+    }
+
+    saveToken(token: string) {
+        localStorage.setItem(this.TOKEN_KEY, token);
     }
 }

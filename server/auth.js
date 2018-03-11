@@ -2,15 +2,24 @@ const User = require('./models/User');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jwt-simple');
 
+const createSendToken = (res, user) => {
+    let payload = {
+        sub: user._id
+    };
+    const token = jwt.encode(payload, 'my-secret');
+    res.status(200).send({token});
+}
+
 module.exports = {
+ 
     register: (req, res, next) => {
         const userData = req.body;
         const user = new User(userData);
-        user.save((err, result) => {
+        user.save((err, newUser) => {
             if (err) {
-                console.log('saving user error');
+                return res.status(500).send({message: 'error saving user'});
             }
-            res.sendStatus(200);
+            createSendToken(res, newUser);
         });
     },
     login: async(req, res, next) => {
@@ -22,11 +31,7 @@ module.exports = {
             if (!isMatch) {
                 return res.status(401).send({message: 'invalid email or pasword'});
             }
-            let payload = {
-                sub: user._id
-            };
-            const token = jwt.encode(payload, 'my-secret');
-            res.status(200).send({token});
+            createSendToken(res, user);
         });
     },
     checkAuthenticated: (req, res, next) => {
