@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-const apiPath = 'http://localhost:3000/api/';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class ApiService {
@@ -10,24 +9,25 @@ export class ApiService {
 
     messages: any[] = [];
     users: any[] = [];
+    apiPath = environment.path;
 
     getMessages(userId: String) {
-        this.http.get<any>(apiPath + 'posts/' + userId).subscribe(res => {
+        this.http.get<any>(this.apiPath + 'posts/' + userId).subscribe(res => {
             this.messages = res;
         });
     }
 
     postMessage(message: Object) {
-        this.http.post(apiPath + 'post', message, {responseType: 'text'}).subscribe(res => {});
+        this.http.post(this.apiPath + 'post', message, {responseType: 'text'}).subscribe(res => {});
     }
 
     getUsers() {
-        this.http.get<any>(apiPath + 'users').subscribe(res => {
+        this.http.get<any>(this.apiPath + 'users').subscribe(res => {
             this.users = res;
         });
     }
 
     getProfile(id: String) {
-        return this.http.get(apiPath + 'profile/' + id);
+        return this.http.get(this.apiPath + 'profile/' + id);
     }
 }
