@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 
 @Component({
     selector: 'register',
-    templateUrl: 'app/register.component.html'
+    templateUrl: 'register.component.html'
 })
 export class RegisterComponent {
     registerData = {};

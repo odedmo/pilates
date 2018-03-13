@@ -12,7 +12,10 @@ export default {
   devtool: 'source-map',
   module: {
     rules: [
-      { test: /.ts$/, use: "ts-loader" },
+      { test: /.ts$/, use: 'ts-loader' },
+      { test: /.ts$/, use: 'angular2-template-loader' },
+      {
+        test: /\.(html)$/, use: 'html-loader' },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
