@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
   entry: "./main.ts",
@@ -14,8 +15,7 @@ export default {
     rules: [
       { test: /.ts$/, use: 'ts-loader' },
       { test: /.ts$/, use: 'angular2-template-loader' },
-      {
-        test: /\.(html)$/, use: 'html-loader' },
+      { test: /\.(html)$/, use: 'html-loader?-minimize' },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
@@ -38,7 +38,8 @@ export default {
       /angular(\\|\/)core(\\|\/)(@angular|esm5)/,
       path.resolve(__dirname, '../src')
     ),
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+    new UglifyJsPlugin()
   ],
   devServer: {
     historyApiFallback: true,
