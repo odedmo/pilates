@@ -1,8 +1,9 @@
 import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
   entry: "./main.ts",
@@ -11,6 +12,7 @@ export default {
     filename: "main.js"
   },
   devtool: 'source-map',
+  mode: 'none',
   module: {
     rules: [
       { test: /.ts$/, use: 'ts-loader' },
@@ -18,15 +20,28 @@ export default {
       { test: /\.(html)$/, use: 'html-loader?-minimize' },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader']
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader', 
+          'sass-loader'
+        ]
       }
     ]
   },
   resolve: {
     extensions: ['.js' , '.webpack.js', '.web.js', '.ts']
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'style',
+          test: /\.scss$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -38,8 +53,13 @@ export default {
       /angular(\\|\/)core(\\|\/)(@angular|esm5)/,
       path.resolve(__dirname, '../src')
     ),
-    new ExtractTextPlugin('style.css'),
-    new UglifyJsPlugin()
+    // new ExtractTextPlugin('style.css'),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
+    new UglifyJsPlugin({
+      sourceMap: true
+    })
   ],
   devServer: {
     historyApiFallback: true,
